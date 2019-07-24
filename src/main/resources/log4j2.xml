@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+
+<!--  level of the log4j2 internal logging -->
+<Configuration status="error">
+  <Appenders>
+    <Console name="Console" target="SYSTEM_OUT">
+    	<!--  Detailed pattern for fine tuning logging (with packages and log levels) -->
+      	<!--  <PatternLayout pattern="%d{HH:mm:ss.SSS} [%t] %-5level %logger{36} - %msg%n"/>  -->
+      	<!--  A concise pattern for everything else -->
+     	<PatternLayout pattern="[%d] %p: %m (in %C{1}:%L)%n" />
+
+    </Console>
+
+    <Console name="WarnConsole" target="SYSTEM_OUT">
+    	<!--  Detailed pattern for fine tuning logging (with packages and log levels) -->
+      	<!--  <PatternLayout pattern="%d{HH:mm:ss.SSS} [%t] %-5level %logger{36} - %msg%n"/>  -->
+      	<!--  A concise pattern for everything else -->
+      	<PatternLayout pattern="[%d] %p: %m (in %C{1}:%L)%n" />
+      	<ThresholdFilter level="warn"/>
+    </Console>
+
+
+     <File name="WarnFile" fileName="logs/error.log">
+      <PatternLayout>
+        <Pattern>[%d] %m (in %C{1}:%L)%n</Pattern>
+      </PatternLayout>
+      	<ThresholdFilter level="warn"/>
+    </File>
+  
+     <File name="chipster" fileName="logs/chipster.log">
+      <PatternLayout>
+        <Pattern>[%d] %m (in %C{1}:%L)%n</Pattern>
+      </PatternLayout>
+    </File>
+
+     <File name="toolbox" fileName="logs/toolbox.log">
+      <PatternLayout>
+        <Pattern>[%d] %m (in %C{1}:%L)%n</Pattern>
+      </PatternLayout>
+    </File>
+
+
+  
+  </Appenders>
+  <Loggers>
+  
+  	<Logger name="org.eclipse.jetty" level="warn" />
+        
+    <!--  default level for our code -->
+    <Logger name="fi.csc.chipster" level="info" additivity="false">
+    	<AppenderRef ref="chipster"/>
+ 		<AppenderRef ref="Console"/>
+ 		<AppenderRef ref="WarnFile"/>
+     </Logger>
+
+    <!--  info level by default so that we see if new libraries have anything interesting to say. Set a higher level for noisy libraries above. -->
+    <Root level="info">
+      <AppenderRef ref="Console"/>
+    </Root>
+  </Loggers>
+</Configuration>
